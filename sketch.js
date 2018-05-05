@@ -19,11 +19,11 @@ function setup() {
 }
 
 function draw() {
-  if (frameCount % 30 == 0) obstacles.push(new Obstacle());
-  // pos.x += sx * 2; // sx
-  // pos.y -= sy * 2; // sy
-  pos.x = mouseX;
-  pos.y = mouseY;
+  if (frameCount % 20 == 0) obstacles.push(new Obstacle());
+  pos.x += sx * 2; // sx
+  pos.y -= sy * 2; // sy
+  // pos.x = mouseX;
+  // pos.y = mouseY;
   edges();
   colorVal = map(pos.x, 0, width, 0, 255);
   let angle = map(pos.y, 0, height, 0, PI);
@@ -31,9 +31,9 @@ function draw() {
   ellipseSize = abs(cos(angle) * maxBallSize) + minBallSize;
   background(colorVal / 2, 255, 255, alpha);
   fill(0);
-  textSize(32);
+  // textSize(32);
   textAlign(CENTER)
-  text(score, width / 2, height / 2);
+  // text(score, width / 2, height / 2);
 
   ball.setRadius(ellipseSize * 0.75);
   ball.update(pos);
@@ -45,7 +45,7 @@ function draw() {
   for (let i = obstacles.length - 1; i >= 0; i--) {
     let obstacle = obstacles[i];
     obstacle.setColor(color(colorVal, 155, 200));
-    obstacle.show(ellipseSize);
+    obstacle.show(ellipseSize * 1.2);
     obstacle.update(pos);
     if (obstacle.hit(ball)) {
       console.log(alpha);
@@ -55,6 +55,7 @@ function draw() {
       if (alpha < 0.07) {
         alpha = 0.07;
       }
+      hitCount++;
     }
     if (obstacle.outOfCanvas()) {
       obstacles.splice(i, 1);
@@ -64,6 +65,13 @@ function draw() {
       }
     }
   }
+  // // Simple reset
+  // if(hitCount > 100){
+  //   ball = new Ball();
+  //   hitCount = 0;
+  //   alpha = 1;
+  //   score = 0;
+  // }
   // fill();
   // // polygon(verices, pos.x, pos.y, ellipseSize * 0.85);
   // ellipse(pos.x, pos.y, ellipseSize * 0.85);
